@@ -11,8 +11,8 @@ function App() {
           order: 0,
           title: "Learn HTML",
           checklist: [
-            "What does HTML stand for",
-            "What are different elements",
+            { text: "What does HTML stand for", complete: false },
+            { text: "What are different elements", complete: false },
           ],
           resources: ["https://google.com"],
           complete: false,
@@ -25,7 +25,10 @@ function App() {
         {
           order: 0,
           title: "Learn React",
-          checklist: ["Why React", "What are different elements"],
+          checklist: [
+            { text: "Why React", complete: false },
+            { text: "What are different elements", complete: false },
+          ],
           resources: ["https://google.com"],
           complete: false,
         },

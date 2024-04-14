@@ -10,18 +10,19 @@ function SectionList({ jsonData }) {
 
   const handleCheckboxChange = (sectionIndex, goalIndex, itemIndex) => {
     const updatedSections = [...sections];
-    updatedSections[sectionIndex].goals[goalIndex].checklist[
-      itemIndex
-    ].complete =
-      !updatedSections[sectionIndex].goals[goalIndex].checklist[itemIndex]
-        .complete;
+    const updatedChecklist =
+      updatedSections[sectionIndex].goals[goalIndex].checklist;
 
-    // Check if all checklist items in the section are completed
-    const allCompleted = updatedSections[sectionIndex].goals[
-      goalIndex
-    ].checklist.every((item) => item.complete);
-    // Update the 'complete' property of the section's goal
-    updatedSections[sectionIndex].goals[goalIndex].complete = allCompleted;
+    // Toggle the completion status of the clicked checklist item
+    updatedChecklist[itemIndex].complete =
+      !updatedChecklist[itemIndex].complete;
+
+    // Update the 'complete' property of the section based on all checklist items
+    updatedSections[sectionIndex].complete = updatedChecklist.every(
+      (item) => item.complete
+    );
+
+    // Set the updated sections state
     setSections(updatedSections);
   };
 
@@ -53,10 +54,12 @@ function SectionList({ jsonData }) {
               {section.goals.map((goal, goalIndex) => (
                 <div key={goalIndex} style={{ marginBottom: "10px" }}>
                   <h3>{goal.title}</h3>
-                  <ul>
+                  <ul style={{ listStyle: "none", paddingLeft: 0 }}>
                     {goal.checklist.map((item, itemIndex) => (
-                      <li key={itemIndex}>
-                        <label>
+                      <li key={itemIndex} style={{ marginBottom: "5px" }}>
+                        <label
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
                           <input
                             type="checkbox"
                             checked={item.complete}
@@ -68,7 +71,7 @@ function SectionList({ jsonData }) {
                               )
                             }
                           />
-                          {item.text}
+                          <span style={{ marginLeft: "5px" }}>{item.text}</span>
                         </label>
                       </li>
                     ))}
